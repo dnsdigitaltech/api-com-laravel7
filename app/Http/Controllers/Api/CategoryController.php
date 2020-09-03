@@ -8,8 +8,8 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index(Category $category){
-        $categories = $category->get();
+    public function index(Category $category, Request $request){
+        $categories = $category->getResults($request->name);
         return response()->json($categories);
     }
 }
