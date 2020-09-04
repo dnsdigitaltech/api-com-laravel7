@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
-
+use App\Http\Requests\StoreUpdateProductRequest;
 class ProductController extends Controller
 {
     private $product, $totalPage = 10;
@@ -32,7 +32,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateProductRequest $request)
     {
         $product = $this->product->create($request->all());
         return response()->json($product, 201);
@@ -46,7 +46,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        // Content-Type application/json           X-Requested-With XMLHttpRequest
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateProductRequest $request, $id)
     {
         $product = $this->product->find($id);
         if(!$product)
