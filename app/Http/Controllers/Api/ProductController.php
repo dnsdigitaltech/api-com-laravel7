@@ -8,7 +8,7 @@ use App\Models\Product;
 
 class ProductController extends Controller
 {
-    private $product;
+    private $product, $totalPage = 10;
 
     public function __construct(Product $product)
     {
@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = $this->product->get();
+        $product = $this->product->paginate($this->totalPage);
 
         return response()->json($product);
     }
