@@ -8,7 +8,7 @@ class Product extends Model
 {
     protected $fillable = ['category_id', 'name', 'description', 'image'];
 
-
+    //Filtros de Produtos da API
     public function getResults($data, $total)
     {
         if (!isset($data['filter']) && !isset($data['name']) && !isset($data['description']))
@@ -33,8 +33,5 @@ class Product extends Model
     }
 
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+    
 }
