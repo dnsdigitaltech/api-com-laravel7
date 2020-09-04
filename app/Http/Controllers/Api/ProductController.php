@@ -46,7 +46,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        // Content-Type application/json           X-Requested-With XMLHttpRequest
+        $product = $this->product->find($id);
+        if(!$product)
+            return response()->json(['error' => 'Not found'], 404);
+        return response()->json($product);
     }
 
     /**
