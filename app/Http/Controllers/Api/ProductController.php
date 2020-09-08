@@ -120,6 +120,13 @@ class ProductController extends Controller
         $product = $this->product->find($id);
         if(!$product)
             return response()->json(['error' => 'Not found'], 404);
+        
+        if($product->image){
+            if(Storage::exists("products/{$product->image}")){
+                Storage::delete("products/{$product->image}");
+            }
+        }
+
         $product->delete();
         return response()->json(['success' => true, 204]);
     }
