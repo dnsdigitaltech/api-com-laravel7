@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Requests\StoreUpdateProductRequest;
+use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     private $product, $totalPage = 10;
@@ -34,7 +35,22 @@ class ProductController extends Controller
      */
     public function store(StoreUpdateProductRequest $request)
     {
-        $product = $this->product->create($request->all());
+        $data = $request->all();
+
+        if($request->hasFile('image') && $request->file('image')->isValid()){
+            
+            $name = Str::kebab($request->name);
+            $extension = $request->image->extension();
+
+            $nameFile = "{$name}.{$extension}";
+            $data['image'] = $nameFile;
+            
+            $upload = $request->image->storeAs('products', $nameFile);
+
+            if(!$upload)
+                return response()->json(['error' => 'Fail_Upload'], 500);
+        }
+        $product = $this->product->create($data);
         return response()->json($product, 201);
     }
 
