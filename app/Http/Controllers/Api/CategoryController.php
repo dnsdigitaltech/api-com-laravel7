@@ -9,7 +9,7 @@ use App\Http\Requests\StoreUpdateCategoryFormRequest;
 
 class CategoryController extends Controller
 {
-    private $category;
+    private $category, $totalPage = 10;
     public function __construct(Category $category){
         $this->category = $category;
     }
@@ -52,7 +52,7 @@ class CategoryController extends Controller
         if(!$category)
             return response()->json(['error' => 'Not found'], 404);
         
-        $products = $category->products()->get();
+        $products = $category->products()->paginate($this->totalPage);
 
         return response()->json([
             'category' => $category,
