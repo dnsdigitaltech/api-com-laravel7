@@ -46,4 +46,17 @@ class CategoryController extends Controller
         $category->delete();
         return response()->json(['success' => 'ok'], 204);
     }
+
+    public function products($id){
+        $category = $this->category->find($id);
+        if(!$category)
+            return response()->json(['error' => 'Not found'], 404);
+        
+        $products = $category->products()->get();
+
+        return response()->json([
+            'category' => $category,
+            'products' => $products
+        ]);
+    }
 }

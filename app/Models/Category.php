@@ -12,4 +12,8 @@ class Category extends Model
             return $this->get();//se não tem parametros retorna todos os dados
         return $this->where('name', 'LIKE', "%{$name}%")->get();
     }
+
+    public function products(){
+        return $this->hasMany(Product::class);
+    }
 }
