@@ -55,6 +55,11 @@ class Handler extends ExceptionHandler
             if($request->expectsJson()) //se a requisição for do tipo AJAX
                 return response()->json(['error' => 'Not_found_URI'], $exception->getStatusCode());
         }
+
+        if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
+            if($request->expectsJson()) //se a requisição for do tipo AJAX
+                return response()->json(['error' => 'Method_Not_Allowed'], $exception->getStatusCode());
+        }
             
         return parent::render($request, $exception);
     }
