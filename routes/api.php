@@ -23,6 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 */
-Route::get('categories/{id}/products', 'Api\CategoryController@products');
-Route::apiResource('categories', 'Api\CategoryController');
-Route::apiResource('products', 'Api\ProductController');
+Route::group(['prefix' => 'v1', 'namespace' => 'Api\v1'], function(){
+    Route::get('categories/{id}/products', 'CategoryController@products');
+    Route::apiResource('categories', 'CategoryController');
+    Route::apiResource('products', 'ProductController');
+});
