@@ -51,8 +51,11 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         //tratamento de errors
-        if($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException);
-            return response()->json(['error', 'Not_found_URI'], $exception->getStatusCode());
+        if($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException){
+            if($request->expectsJson()) //se a requisição for do tipo AJAX
+                return response()->json(['error' => 'Not_found_URI'], $exception->getStatusCode());
+        }
+            
         return parent::render($request, $exception);
     }
 }
